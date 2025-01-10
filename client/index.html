@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+</head>
+<body>
+    <h1>Memory Game WebSocket Test</h1>
+    <input type="text" id="message" placeholder="Escribe un mensaje">
+    <button id="send">Enviar</button>
+    <div id="log"></div>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:3000');
+
+        socket.onopen = () => {
+            console.log('Conectado al servidor');
+        };
+
+        socket.onmessage = (event) => {
+            const log = document.getElementById('log');
+            log.innerHTML += `<p>${event.data}</p>`;
+        };
+
+        document.getElementById('send').addEventListener('click', () => {
+            const message = document.getElementById('message').value;
+            socket.send(message);
+        });
+    </script>
+</body>
+</html>
